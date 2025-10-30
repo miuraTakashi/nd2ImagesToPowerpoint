@@ -39,7 +39,13 @@ git clone https://github.com/miuraTakashi/nd2ImagesToPowerpoint.git
 cd nd2ImagesToPowerpoint
 ```
 
-2. Install dependencies:
+2. Install the package (this will also install dependencies and make the command available):
+
+```bash
+pip install -e .
+```
+
+Or install dependencies only:
 
 ```bash
 pip install -r requirements.txt
@@ -51,11 +57,26 @@ Or install individually:
 pip install nd2 numpy Pillow python-pptx
 ```
 
+After installation with `pip install -e .`, you can use the `nd2ImagesToPowerpoint` command from any directory:
+
+```bash
+cd /path/to/nd2/files
+nd2ImagesToPowerpoint
+```
+
+For other installation methods, see [INSTALL.md](INSTALL.md).
+
 ## Usage
 
 ### Basic Usage
 
 Search for `.nd2` files in the current directory and subdirectories, then generate a PowerPoint presentation:
+
+```bash
+nd2ImagesToPowerpoint
+```
+
+Or using Python directly:
 
 ```bash
 python nd2ImagesToPowerpoint.py
@@ -64,7 +85,7 @@ python nd2ImagesToPowerpoint.py
 ### With Options
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir /path/to/nd2/files \
   --output MyPresentation.pptx \
   --mip-z \
@@ -96,13 +117,13 @@ python nd2ImagesToPowerpoint.py \
 #### Example 1: Basic Generation
 
 ```bash
-python nd2ImagesToPowerpoint.py --dir ./sample
+nd2ImagesToPowerpoint --dir ./sample
 ```
 
 #### Example 2: Z-axis Projection and Contrast Adjustment
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir ./data \
   --mip-z \
   --clip-percent 0.3 \
@@ -112,7 +133,7 @@ python nd2ImagesToPowerpoint.py \
 #### Example 3: Image Size Adjustment and Debugging
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir ./experiments \
   --scale 0.6 \
   --max-slide-size 1200 \
@@ -149,7 +170,7 @@ If channel names cannot be recognized, fallback processing assigns them appropri
 Use the `--verbose` option to check channel mapping:
 
 ```bash
-python nd2ImagesToPowerpoint.py --verbose
+nd2ImagesToPowerpoint --verbose
 ```
 
 Check the output channel mapping information to verify that channel names are correctly recognized.
