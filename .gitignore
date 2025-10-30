@@ -46,6 +46,11 @@ temp_fluorescence_images_pptx/
 *.png
 !sample/
 
+# Build artifacts
+*.egg-info/
+build/
+dist/
+
 # Logs
 *.log
 

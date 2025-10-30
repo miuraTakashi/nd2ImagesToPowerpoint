@@ -39,7 +39,13 @@ git clone https://github.com/miuraTakashi/nd2ImagesToPowerpoint.git
 cd nd2ImagesToPowerpoint
 ```
 
-2. 依存パッケージをインストール:
+2. パッケージをインストール（これにより依存パッケージもインストールされ、コマンドが使用可能になります）:
+
+```bash
+pip install -e .
+```
+
+または依存パッケージのみをインストール:
 
 ```bash
 pip install -r requirements.txt
@@ -51,11 +57,64 @@ pip install -r requirements.txt
 pip install nd2 numpy Pillow python-pptx
 ```
 
+`pip install -e .` でインストール後、任意のディレクトリから `nd2ImagesToPowerpoint` コマンドが使用できます:
+
+```bash
+cd /path/to/nd2/files
+nd2ImagesToPowerpoint
+```
+
+### その他のインストール方法
+
+#### 方法2: シェルスクリプトラッパーを使用
+
+リポジトリのディレクトリをPATHに追加します。`~/.zshrc`（または`~/.bashrc`）に以下を追加:
+
+```bash
+export PATH="$PATH:/path/to/nd2ImagesToPowerpoint"
+```
+
+その後、シェルを再起動するか、以下を実行:
+
+```bash
+source ~/.zshrc  # または source ~/.bashrc
+```
+
+#### 方法3: シンボリックリンクを作成
+
+システム全体でコマンドを使用できるようにシンボリックリンクを作成:
+
+```bash
+sudo ln -s /path/to/nd2ImagesToPowerpoint/nd2ImagesToPowerpoint /usr/local/bin/nd2ImagesToPowerpoint
+```
+
+#### 方法4: Pythonスクリプトを直接実行
+
+コマンドをインストールしたくない場合は、Pythonスクリプトを直接実行できます:
+
+```bash
+python /path/to/nd2ImagesToPowerpoint/nd2ImagesToPowerpoint.py
+```
+
+または、リポジトリディレクトリにいる場合:
+
+```bash
+python nd2ImagesToPowerpoint.py
+```
+
+**注意:** 方法1（`pip install -e .`）は、依存関係を適切に管理し、最もクリーンなインストールを提供するため、ほとんどのユーザーに推奨されます。権限エラーが発生した場合は、代わりに`pip install --user -e .`を使用する必要がある場合があります。
+
 ## 使い方
 
 ### 基本的な使い方
 
 カレントディレクトリとそのサブディレクトリから`.nd2`ファイルを検索し、PowerPointプレゼンテーションを生成:
+
+```bash
+nd2ImagesToPowerpoint
+```
+
+またはPythonを直接使用:
 
 ```bash
 python nd2ImagesToPowerpoint.py
@@ -64,7 +123,7 @@ python nd2ImagesToPowerpoint.py
 ### オプション指定
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir /path/to/nd2/files \
   --output MyPresentation.pptx \
   --mip-z \
@@ -96,13 +155,13 @@ python nd2ImagesToPowerpoint.py \
 #### 例1: 基本的な生成
 
 ```bash
-python nd2ImagesToPowerpoint.py --dir ./sample
+nd2ImagesToPowerpoint --dir ./sample
 ```
 
 #### 例2: Z軸投影とコントラスト調整
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir ./data \
   --mip-z \
   --clip-percent 0.3 \
@@ -112,7 +171,7 @@ python nd2ImagesToPowerpoint.py \
 #### 例3: 画像サイズ調整とデバッグ
 
 ```bash
-python nd2ImagesToPowerpoint.py \
+nd2ImagesToPowerpoint \
   --dir ./experiments \
   --scale 0.6 \
   --max-slide-size 1200 \
@@ -149,7 +208,7 @@ python nd2ImagesToPowerpoint.py \
 `--verbose`オプションを使用してチャネルマッピングを確認:
 
 ```bash
-python nd2ImagesToPowerpoint.py --verbose
+nd2ImagesToPowerpoint --verbose
 ```
 
 出力されるチャネルマッピング情報を確認し、チャネル名が正しく認識されているか確認してください。
@@ -178,5 +237,10 @@ pip install python-pptx
 
 - `nd2ImagesToPowerpoint.py` - メインスクリプト
 - `requirements.txt` - 依存パッケージ一覧
+- `setup.py` - インストール用セットアップファイル
 - `sample/` - サンプルND2ファイル（テスト用）
+
+---
+
+[English version](README.md)
 

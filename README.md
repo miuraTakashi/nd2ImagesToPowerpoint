@@ -64,7 +64,45 @@ cd /path/to/nd2/files
 nd2ImagesToPowerpoint
 ```
 
-For other installation methods, see [INSTALL.md](INSTALL.md).
+### Additional Installation Methods
+
+#### Method 2: Using Shell Script Wrapper
+
+Add the repository directory to your PATH. Add the following to `~/.zshrc` (or `~/.bashrc`):
+
+```bash
+export PATH="$PATH:/path/to/nd2ImagesToPowerpoint"
+```
+
+Then restart your shell or run:
+
+```bash
+source ~/.zshrc  # or source ~/.bashrc
+```
+
+#### Method 3: Create Symbolic Link
+
+Create a symbolic link to make the command available system-wide:
+
+```bash
+sudo ln -s /path/to/nd2ImagesToPowerpoint/nd2ImagesToPowerpoint /usr/local/bin/nd2ImagesToPowerpoint
+```
+
+#### Method 4: Run Python Script Directly
+
+If you don't want to install the command, you can always run the Python script directly:
+
+```bash
+python /path/to/nd2ImagesToPowerpoint/nd2ImagesToPowerpoint.py
+```
+
+Or if you're in the repository directory:
+
+```bash
+python nd2ImagesToPowerpoint.py
+```
+
+**Note:** Method 1 (`pip install -e .`) is recommended for most users as it properly manages dependencies and provides the cleanest installation. If you encounter permission errors, you may need to use `pip install --user -e .` instead.
 
 ## Usage
 
