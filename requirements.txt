@@ -1,0 +1,4 @@
+nd2
+numpy
+Pillow
+python-pptx
