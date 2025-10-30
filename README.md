@@ -1,70 +1,70 @@
 # ND2 Images to PowerPoint
 
-Nikon ND2ファイルから蛍光画像を抽出し、PowerPointプレゼンテーションを自動生成するPythonスクリプトです。
+A Python script that extracts fluorescence images from Nikon ND2 files and automatically generates PowerPoint presentations.
 
-## 機能
+## Features
 
-- **ND2ファイルの自動検出**: 指定ディレクトリ以下（再帰的）から`.nd2`ファイルを検索
-- **チャネル自動マッピング**: 
-  - DAPI → 青チャネル
-  - Alexa 488 antibody / Alexa488 → 緑チャネル
-  - Alx568 / Alexa568 → 赤チャネル
-  - 明視野チャネル（brightfield/BF/TD等）は自動的に除外
-- **PowerPointスライド生成**: 
-  - Two Contentレイアウトを使用
-  - タイトルに相対パスとファイル名を表示
-  - 左側に画像を配置
-  - 右側に一辺の長さ（µm）とチャネル情報を箇条書きで表示
-- **画像処理オプション**:
-  - Z軸方向の最大強度投影（MIP）
-  - 時間軸方向の最大強度投影（MIP）
-  - パーセンタイルクリッピングによるコントラスト調整
-  - 画像のスケーリング
+- **Automatic ND2 file detection**: Recursively searches for `.nd2` files in the specified directory and subdirectories
+- **Automatic channel mapping**: 
+  - DAPI → Blue channel
+  - Alexa 488 antibody / Alexa488 → Green channel
+  - Alx568 / Alexa568 → Red channel
+  - Brightfield channels (brightfield/BF/TD, etc.) are automatically excluded
+- **PowerPoint slide generation**: 
+  - Uses Two Content layout
+  - Displays relative path and filename in the title
+  - Places image on the left side
+  - Shows side length (µm) and channel information as bullet points on the right side
+- **Image processing options**:
+  - Maximum intensity projection (MIP) along Z-axis
+  - Maximum intensity projection (MIP) along time axis
+  - Contrast adjustment via percentile clipping
+  - Image scaling
 
-## 必要要件
+## Requirements
 
-- Python 3.9 以上
-- 以下のPythonパッケージ:
-  - `nd2` - ND2ファイル読み込み
-  - `numpy` - 数値計算
-  - `Pillow` - 画像処理
-  - `python-pptx` - PowerPointファイル生成
+- Python 3.9 or higher
+- The following Python packages:
+  - `nd2` - ND2 file reading
+  - `numpy` - Numerical computation
+  - `Pillow` - Image processing
+  - `python-pptx` - PowerPoint file generation
 
-## インストール
+## Installation
 
-1. リポジトリをクローンまたはダウンロード:
+1. Clone or download the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/miuraTakashi/nd2ImagesToPowerpoint.git
 cd nd2ImagesToPowerpoint
 ```
 
-2. 依存パッケージをインストール:
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-または個別にインストール:
+Or install individually:
 
 ```bash
 pip install nd2 numpy Pillow python-pptx
 ```
 
-## 使い方
+## Usage
 
-### 基本的な使い方
+### Basic Usage
 
-カレントディレクトリとそのサブディレクトリから`.nd2`ファイルを検索し、PowerPointプレゼンテーションを生成:
+Search for `.nd2` files in the current directory and subdirectories, then generate a PowerPoint presentation:
 
 ```bash
-python create_powerpoint_from_nd2.py
+python nd2ImagesToPowerpoint.py
 ```
 
-### オプション指定
+### With Options
 
 ```bash
-python create_powerpoint_from_nd2.py \
+python nd2ImagesToPowerpoint.py \
   --dir /path/to/nd2/files \
   --output MyPresentation.pptx \
   --mip-z \
@@ -75,44 +75,44 @@ python create_powerpoint_from_nd2.py \
   --verbose
 ```
 
-### コマンドラインオプション
+### Command-Line Options
 
-| オプション | 説明 | デフォルト |
-|-----------|------|----------|
-| `--dir` | 検索対象ディレクトリ | カレントディレクトリ |
-| `--recursive` | サブディレクトリを再帰的に検索 | 有効（デフォルト） |
-| `--output` | 出力ファイル名（`.pptx`） | ディレクトリ名`.pptx` |
-| `--mip-z` | Z軸方向の最大強度投影を適用 | 無効 |
-| `--mip-t` | 時間軸方向の最大強度投影を適用 | 無効 |
-| `--clip-percent` | パーセンタイルクリッピングのパーセンテージ（例: 0.3） | 0.0（無効） |
-| `--scale` | 画像のスケールファクター（例: 0.5で50%に縮小） | 1.0 |
-| `--max-slide-size` | スライド上の画像の最大サイズ（ピクセル） | 1600 |
-| `--keep-jpgs` | 中間JPGファイルを保持 | 無効（自動削除） |
-| `--jpg-dir` | 中間JPGファイルの保存ディレクトリ | 一時ディレクトリ |
-| `--verbose` | 詳細なチャネルマッピング情報を表示 | 無効 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--dir` | Target directory to search | Current directory |
+| `--recursive` | Recursively search subdirectories | Enabled (default) |
+| `--output` | Output file name (`.pptx`) | Directory name `.pptx` |
+| `--mip-z` | Apply maximum intensity projection along Z-axis | Disabled |
+| `--mip-t` | Apply maximum intensity projection along time axis | Disabled |
+| `--clip-percent` | Percentile clipping percentage (e.g., 0.3) | 0.0 (disabled) |
+| `--scale` | Image scale factor (e.g., 0.5 for 50% reduction) | 1.0 |
+| `--max-slide-size` | Maximum image size on slide (pixels) | 1600 |
+| `--keep-jpgs` | Keep intermediate JPG files | Disabled (auto-delete) |
+| `--jpg-dir` | Directory to store intermediate JPG files | Temporary directory |
+| `--verbose` | Display detailed channel mapping information | Disabled |
 
-### 使用例
+### Usage Examples
 
-#### 例1: 基本的な生成
+#### Example 1: Basic Generation
 
 ```bash
-python create_powerpoint_from_nd2.py --dir ./sample
+python nd2ImagesToPowerpoint.py --dir ./sample
 ```
 
-#### 例2: Z軸投影とコントラスト調整
+#### Example 2: Z-axis Projection and Contrast Adjustment
 
 ```bash
-python create_powerpoint_from_nd2.py \
+python nd2ImagesToPowerpoint.py \
   --dir ./data \
   --mip-z \
   --clip-percent 0.3 \
   --output Results.pptx
 ```
 
-#### 例3: 画像サイズ調整とデバッグ
+#### Example 3: Image Size Adjustment and Debugging
 
 ```bash
-python create_powerpoint_from_nd2.py \
+python nd2ImagesToPowerpoint.py \
   --dir ./experiments \
   --scale 0.6 \
   --max-slide-size 1200 \
@@ -120,63 +120,66 @@ python create_powerpoint_from_nd2.py \
   --verbose
 ```
 
-## 出力形式
+## Output Format
 
-生成されるPowerPointスライドの形式:
+The generated PowerPoint slides have the following format:
 
-- **レイアウト**: Two Content（2列コンテンツ）
-- **タイトル**: 相対パス + ファイル名（例: `sample/x20x8_x500_1.nd2`）
-- **左側**: 蛍光画像（RGB合成）
-- **右側**: 
-  - 一辺の長さ（µm/side）
-  - チャネル情報（Red/Green/Blueそれぞれのチャネル名）
+- **Layout**: Two Content (2-column content)
+- **Title**: Relative path + filename (e.g., `sample/x20x8_x500_1.nd2`)
+- **Left side**: Fluorescence image (RGB composite)
+- **Right side**: 
+  - Side length (µm/side)
+  - Channel information (Red/Green/Blue channel names)
 
-## チャネルマッピングルール
+## Channel Mapping Rules
 
-スクリプトは以下のルールでチャネルを自動的に識別します:
+The script automatically identifies channels using the following rules:
 
-- **青チャネル**: DAPI, Hoechst, 405nm
-- **緑チャネル**: Alexa 488 antibody, Alexa488, 488nm, GFP, FITC
-- **赤チャネル**: Alx568, Alexa568, 568nm, 561nm, 555nm, 594nm, Cy3, mCherry, Texas Red
-- **除外**: brightfield, BF, TD, TL, transmitted, phase, PH, DIC などの明視野チャネル
+- **Blue channel**: DAPI, Hoechst, 405nm
+- **Green channel**: Alexa 488 antibody, Alexa488, 488nm, GFP, FITC
+- **Red channel**: Alx568, Alexa568, 568nm, 561nm, 555nm, 594nm, Cy3, mCherry, Texas Red
+- **Excluded**: Brightfield channels such as brightfield, BF, TD, TL, transmitted, phase, PH, DIC
 
-チャネル名が認識できない場合、フォールバック処理により適切に割り当てられます。
+If channel names cannot be recognized, fallback processing assigns them appropriately.
 
-## トラブルシューティング
+## Troubleshooting
 
-### 画像が青く表示される
+### Images Appear Blue
 
-`--verbose`オプションを使用してチャネルマッピングを確認:
+Use the `--verbose` option to check channel mapping:
 
 ```bash
-python create_powerpoint_from_nd2.py --verbose
+python nd2ImagesToPowerpoint.py --verbose
 ```
 
-出力されるチャネルマッピング情報を確認し、チャネル名が正しく認識されているか確認してください。
+Check the output channel mapping information to verify that channel names are correctly recognized.
 
-### プレースホルダに画像が挿入されない
+### Images Not Inserted into Placeholders
 
-スクリプトは自動的にプレースホルダへの挿入を試み、失敗した場合はプレースホルダを削除して画像を配置します。問題が続く場合は、PowerPointテンプレートを確認してください。
+The script automatically attempts to insert images into placeholders, and removes placeholders if insertion fails. If problems persist, check your PowerPoint template.
 
-### 依存パッケージのエラー
+### Dependency Package Errors
 
-`python-pptx`が見つからないエラーが出る場合:
+If you get an error that `python-pptx` is not found:
 
 ```bash
 pip install python-pptx
 ```
 
-## ライセンス
+## License
 
-このプロジェクトはMITライセンスの下で提供されています。
+This project is provided under the MIT License.
 
-## 貢献
+## Contributing
 
-バグ報告や機能要望は、Issueまたはプルリクエストでお知らせください。
+Please report bugs or feature requests via Issues or Pull Requests.
 
-## 関連ファイル
+## Related Files
 
-- `create_powerpoint_from_nd2.py` - メインスクリプト
-- `requirements.txt` - 依存パッケージ一覧
-- `sample/` - サンプルND2ファイル（テスト用）
+- `nd2ImagesToPowerpoint.py` - Main script
+- `requirements.txt` - Dependency package list
+- `sample/` - Sample ND2 files (for testing)
 
+---
+
+[日本語版 / Japanese version](README_ja.md)
